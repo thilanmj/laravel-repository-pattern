@@ -6,19 +6,33 @@
  * Time: 11:28 PM
  */
 
-interface UserService
+namespace App\Services;
+
+use App\Repositories\UserRepository;
+
+class UserService
 {
 
-    public function findUser($id);
+    protected $repository;
 
-    public function findAllUsers();
+    public function __construct(UserRepository $repository)
+    {
+        $this->repository = $repository;
+    }
 
-    public function findAllUsersByRole($roleId);
+    public function findUser($id)
+    {
+        return $this->repository->find($id, $columns = ['*']);
+    }
 
-    public function saveUser(Request $request);
+    public function findAllUsers()
+    {
+        return $this->repository->all($columns = ['*']);
+    }
 
-    public function updateUser(Request $request);
-
-    public function deleteUser($id);
+    public function findUsersBasicInfo()
+    {
+        return $this->repository->all($columns = ['first_name','last_name']);
+    }
 
 }

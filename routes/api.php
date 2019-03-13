@@ -20,7 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('auth', 'Auth\AccessTokenController@issueToken');
 Route::post('users/registration', 'Auth\RegisterController@create');
 
-/*Route::group(['prefix' => 'api/v1'], function () {
-    \Log::info(" ============ API ================ ");
-
-});*/
+Route::middleware('auth:api')->group(function () {
+    Route::get('users/all', 'UserController@getAllUsers');
+});
